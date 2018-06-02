@@ -1,7 +1,9 @@
 # Chapter 2 첫 번째 자바 모듈 만들기
 
-## [Java 9 모듈 프로그래밍, 한빛미디어(코시크 코타갈)]("http://www.hanbit.co.kr/store/books/look.php?p_code=B7608640342")
+## Java 9 모듈 프로그래밍
 ![책이미지](book-image.jpg)
+
+[Java 9 모듈 프로그래밍, 한빛미디어(코시크 코타갈)]("http://www.hanbit.co.kr/store/books/look.php?p_code=B7608640342")
 
 ## 목차
 1. JDK 설정하기
