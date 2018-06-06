@@ -3,6 +3,8 @@
 ## [Java 9 모듈 프로그래밍, 한빛미디어(코시크 코타갈)](http://www.hanbit.co.kr/store/books/look.php?p_code=B7608640342)
 ![책이미지](book-image.jpg)
 
+소스: https://github.com/yudong80/Modular-Programming-in-Java-9/tree/master/05-jdk-modules/src/packt.addressbook.ui/packt/addressbook
+
 ## 목차
 1. JDK 설정하기
 2. JDK 버전 전환하기
