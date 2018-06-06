@@ -1,18 +1,31 @@
 package packt.addressbook;
 
-import packt.addressbook.model.Contact;
-import packt.addressbook.util.ContactUtil;
+import packt.contact.model.Contact;
 import packt.util.SortUtil;
+import packt.contact.util.ContactLoader;
+import packt.contact.util.ContactLoadException;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 
 public class Main {
 
+    private static final Logger logger = Logger.getLogger(Main.class.getName());
+
     public static void main(String[] args) {
-        ContactUtil contactUtil = new ContactUtil();
+        logger.info(">> Address book viewer application: Started");
+        List<Contact> contacts = new ArrayList<>();
+        ContactLoader contactLoader = new ContactLoader();
         SortUtil sortUtil = new SortUtil();
-        List<Contact> contacts = contactUtil.getContacts();
+        try {
+            contacts = contactLoader.loadContacts("input.xml");
+        } catch (ContactLoadException e) {
+            logger.warning(e.getMessage());
+            System.exit(0);
+        }
         sortUtil.sortList(contacts);
         System.out.println(contacts);
+        logger.info(">> Address book viewer application: Completed");
     }
 }

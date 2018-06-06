@@ -39,12 +39,12 @@ public class Contact implements Comparable {
 
     private String firstName;
     private String lastName;
-    private String phoneNumber;
+    private String phone;
 
-    public Contact(String firstName, String lastName, String phoneNumber) {
+    public Contact(String firstName, String lastName, String phone) {
         this.firstName = firstName;
         this.lastName = lastName;
-        this.phoneNumber = phoneNumber;
+        this.phone = phone;
     }
 
     public String getFirstName() {
@@ -64,16 +64,16 @@ public class Contact implements Comparable {
     }
 
     public String getPhoneNumber() {
-        return phoneNumber;
+        return phone;
     }
 
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
+    public void setPhoneNumber(String phone) {
+        this.phone = phone;
     }
 
     @Override
     public String toString() {
-        return this.lastName + " " + this.phoneNumber;
+        return this.lastName + " " + this.phone;
     }
 
     @Override

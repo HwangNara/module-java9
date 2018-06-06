@@ -1,6 +1,6 @@
 package packt.addressbook.util;
 
-import packt.addressbook.model.Contact;
+import packt.contact.model.Contact;
 
 import java.util.Arrays;
 import java.util.List;
