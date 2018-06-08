@@ -17,14 +17,13 @@ public class Main {
         logger.info(">> Address book viewer application: Started");
         List<Contact> contacts = new ArrayList<>();
         ContactLoader contactLoader = new ContactLoader();
-        SortUtil sortUtil = new SortUtil();
         try {
             contacts = contactLoader.loadContacts("input.xml");
         } catch (ContactLoadException e) {
             logger.warning(e.getMessage());
             System.exit(0);
         }
-        sortUtil.sortList(contacts);
+        SortUtil.getProviderInstanceLazy().sortList(contacts);
         System.out.println(contacts);
         logger.info(">> Address book viewer application: Completed");
     }

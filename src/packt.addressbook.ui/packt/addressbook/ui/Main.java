@@ -2,6 +2,7 @@ package packt.addressbook.ui;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 import javafx.application.Application;
@@ -9,8 +10,6 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
-import javafx.geometry.Pos;
-import javafx.geometry.VPos;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
@@ -29,23 +28,26 @@ import packt.contact.util.ContactLoader;
 
 public class Main extends Application {
 
+    private static final Logger logger = Logger.getLogger(Main.class.getName());
+
     public static void main(String[] args) {
         launch(args);
     }
 
     @Override
-    public void start(Stage primaryStage) throws Exception {
+    public void start(Stage primaryStage) {
 
+        logger.info(">> Address book viewer application: Started");
         List<Contact> contacts = new ArrayList<>();
         ContactLoader contactLoader = new ContactLoader();
-        SortUtil sortUtil = new SortUtil();
         try {
             contacts = contactLoader.loadContacts("input.xml");
         } catch (ContactLoadException e) {
 
             System.exit(0);
         }
-        sortUtil.sortList(contacts);
+
+        SortUtil.getProviderInstanceLazy().sortList(contacts);
         primaryStage.setTitle("Addressbook Viewer");
 
         BorderPane root = new BorderPane();
@@ -121,7 +123,7 @@ public class Main extends Application {
 
         primaryStage.setScene(new Scene(root, 700, 550));
         primaryStage.show();
-
+        logger.info(">> Address book viewer application: Completed");
     }
 
     public HBox generateTitleHBox() {
