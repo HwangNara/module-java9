@@ -1,0 +1,6 @@
+jlink --module-path "C:\Program Files\Java\jdk-9.0.4\jmods";out --add-modules packt.addressbook --bind-services --compress=2 --include-locales=en --output image
+
+
+image/bin/java -m packt.addressbook.ui/packt.addressbook.ui.Main
+
+jar --create --file out/addressbook-ui.jar --module-version=1.0 --main-class=packt.addressbook.ui.Main -C out/packt.addressbook.ui .
