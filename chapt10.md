@@ -15,7 +15,7 @@
 2. 코드가 작성된 방식
 
 ## 10.2. 자바 8 기반의 응용 프로그램 예제 (shopping bag 유틸리티)
-ShoppingBag.java
+**ShoppingBag.java**
 ```java
 package chapt10;
 
@@ -44,7 +44,7 @@ public class ShoppingBag {
 }
 ```
 
-UserInputUtil
+**UserInputUtil.java**
 ```java
 package chapt10;
 
@@ -65,7 +65,7 @@ public class UserInputUtil {
 }
 ```
 
-Application.java
+**Application.java**
 ```java
 package chapt10;
 
