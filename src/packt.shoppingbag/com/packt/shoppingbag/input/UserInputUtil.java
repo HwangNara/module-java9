@@ -1,4 +1,4 @@
-package com.packt.sortstrings.input;
+package com.packt.shoppingbag.input;
 
 import java.util.Scanner;
 

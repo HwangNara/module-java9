@@ -1,7 +1,7 @@
-package com.packt.sortstrings.app;
+package com.packt.shoppingbag.app;
 
-import com.packt.sortstrings.data.ShoppingBag;
-import com.packt.sortstrings.input.UserInputUtil;
+import com.packt.shoppingbag.data.ShoppingBag;
+import com.packt.shoppingbag.input.UserInputUtil;
 
 import java.util.logging.Logger;
 

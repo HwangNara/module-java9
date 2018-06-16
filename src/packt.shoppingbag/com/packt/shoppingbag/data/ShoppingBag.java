@@ -1,4 +1,4 @@
-package com.packt.sortstrings.data;
+package com.packt.shoppingbag.data;
 
 import org.apache.commons.collections4.Bag;
 import org.apache.commons.collections4.bag.HashBag;
