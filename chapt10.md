@@ -1,4 +1,4 @@
-# Chapt10. 자바 9를 위한 코드 준비하기
+# Chapt10 자바 9를 위한 코드 준비하기
 
 ## 다루는 내용
 - 레거시 코드와 작업하고 자바 9에서 실행할 준비하기
@@ -11,8 +11,11 @@
 마이그레이션 작업량 두가지 요소
 1. 마이그레이션의 성격
     1. 기존 코드를 자바 9 환경에서 예전처럼 컴파일하고 실행하기
-    2. 코드 구조를 리팩토링하여 모듈 기능 적용하기
-2. 코드가 작성된 방식
+        1. 코드를 가능한 한 수정하지 않음
+        1. 자바 9 마이그레이션을 위해서는 반드시 필요
+    1. 코드 구조를 리팩토링하여 모듈 기능 적용하기
+        1. 리팩토링하거나 재작성하여 모듈 기능 활용
+1. 코드가 작성된 방식
 
 ## 10.2. 자바 8 기반의 응용 프로그램 예제 (shopping bag 유틸리티)
 **ShoppingBag.java**
@@ -103,29 +106,56 @@ public class Application {
 실행
  
  ` java -cp out;src/lib/commons-collections4-4.1.jar com.packt.sortstrings.app.Application ` (Windows)
+ 
  ` java -cp out:src/lib/commons-collections4-4.1.jar com.packt.sortstrings.app.Application ` (Mac or Linux)
 
-이름 없는 모듈(unnamed module)
+### 어떻게 동작이 됐을까?
+  - 위의 자바 8 코드에는 모듈을 안씀 (module-info.java 없음)
+  - 자바 로깅 API를 위한 의존성 선언 안함
+
+### 이름 없는 모듈(unnamed module)
 - 자바9에서 레거시 코드를 실행하게 하는 과정을 지원하고자 도입된 기능 
 
 ### 10.3.1 이름 없는 모듈
-- 자바 9에서 -cp 옵션으로 컴파일하거나 실행하면 플랫폼은 이름 없는 모듈을 자동으로 생성합니다. 클래스패스에 있는 모든 클래스와 JAR 파일은 이름 없는 모듈로 배포됩니다.
-- 이름 없는 모듈은 자동으로 모든 관찰 대상 모듈을 읽습니다. 따라서 모든 자바 9 플랫폼 모듈뿐만 아니라 모듈 경로에 있는 다른 응용 프로그램과 라이브러리 모듈도 읽슷ㅂ니다(모듈 경로를 추가하면 이것도 클래스패스에 포함됩니다).
+![자바 9 응용 프로그램의 모듈 도식](./ch10-image/10-2.png)
+- 자바 9 응용 프로그램의 모듈 도식
+
+![클래스패스 포함했을 때](./ch10-image/10-3.png)
+- 클래스패스 옵션으로 실행
+
+![클래스패스에 있는 모든 클래스와 JAR파일을 이름 없는 모듈로 래핑](./ch10-image/10-4.png)
+- 클래스패스에 있는 모든 클래스와 JAR파일을 이름 없는 모듈로 래핑
+
+![이름 없는 모듈은 자동으로 모든 모듈을 필요하다고 선언](./ch10-image/10-5.png)
+- 이름 없는 모듈은 자동으로 모든 모듈을 필요하다고 선언
+
+- 자바 9에서 -cp 옵션으로 컴파일하거나 실행하면 플랫폼은 이름 없는 모듈을 자동으로 생성
+- 클래스패스에 있는 모든 클래스와 JAR 파일은 이름 없는 모듈로 배포됨
+- 이름 없는 모듈은 자동으로 모든 관찰 대상 모듈을 읽음 
+- 따라서 모든 자바 9 플랫폼 모듈뿐만 아니라 모듈 경로에 있는 다른 응용 프로그램과 라이브러리 모듈도 읽음(모듈 경로를 추가하면 이것도 클래스패스에 포함됨)
 
 ### 10.3.2 비표준 접근 다루기
+#### 비표준 접근
+- Base64Encoder 클래스: 이전 자바 버전에서 사용. 자바 9에서는 완전히 제거
+- CalendarUtils 클래스: 자바 9에서 java.base 모듈의 내부 타입으로 캡슐화됨
+- 컴파일 에러 발생
+
 #### jdeps (Java Dependency Analysis Tool)
 
 `jdeps -jdkinternals <JAR 파일들>`
 
 `jdeps -jdkinternals -cp <클래스패스들>`
 
+![jdeps 결과](./ch10-image/10-8.png)
+- 
+
 ### 10.3.3 모듈 행동 오버라이드하기
 #### add-reads
 모듈 설정을 기준으로 모듈에서 사용할 수 없는 새로운 가독성 관계를 명시
-- --add-reads <소스 모듈>=<대상 모류>
+- --add-reads <소스 모듈>=<대상 모듈>
 
 #### add-exports
-어떤 모듈에 익스포트 패키리르 추가함. 캡슐화를 깨거나 오버라이드할 수 있음
+어떤 모듈에 익스포트 패키지를 추가함. 캡슐화를 깨거나 오버라이드할 수 있음
 - --add-exports <소스 모듈>/<패키지 이름>=<대상 모듈>
 
 #### add-opens
@@ -146,6 +176,7 @@ JAR 파일의 매니페스트 파일에 명시 가능
 
 #### -add-exports 속성을 추가하여 컴파일
 - `javac -d out src/com/packt/app/Application.java --add-exports java.base/sun.util.calendar=ALL-UNNAMED`
+- 이름 없는 모듈 이름으로 ALL-UNNAMED
 - warnings를 나타내고 컴파일 성공
 - 캡슐화된 타입 접근 문제만 있으면 위와 같이 해결 가능
 - 더는 존재하지 않는 타입을 참조하고 있다면 코드를 수정하고 재컴파일 해야함
@@ -160,7 +191,16 @@ JAR 파일의 매니페스트 파일에 명시 가능
 - 아직 접근할 수 있는 미지원 API
 - `java -d jdk.unsupported`
 - 나중에 쉽게 퇴화 가능
- 
+```
+$ java -d jdk.unsupported
+exports com.sun.nio.file
+exports sun.misc
+exports sun.reflect
+requires java.base mandated 
+opens sun.reflect
+opens sun.misc
+```
+
 ## 10.5. 추천 전략
 1. `jdeps -jdkinternals`로 내부 API를 호출하고 있는지 확인
 2. 오류가 있고 고칠 수 있으면 jdeps 명령의 권고에 따라 해당 오류 수정
